@@ -14,6 +14,7 @@ class CustomThemeExtension extends ThemeExtension<CustomThemeExtension> {
     blueColor: MyColors.blueLight,
     langBtnColor: const Color(0xFFF7F8FA),
     langBtnHighlightColor: const Color(0xFFE8E8ED),
+    authAppbarTextColor: MyColors.greenLight,
   );
 
   static CustomThemeExtension darkMode = CustomThemeExtension(
@@ -22,6 +23,7 @@ class CustomThemeExtension extends ThemeExtension<CustomThemeExtension> {
     blueColor: MyColors.blueLight,
     langBtnColor: const Color(0xFF182229),
     langBtnHighlightColor: const Color(0xFF09141A),
+    authAppbarTextColor: const Color(0xFFE9EDEF),
   );
 
   final Color? circleImageColor;
@@ -29,6 +31,7 @@ class CustomThemeExtension extends ThemeExtension<CustomThemeExtension> {
   final Color? blueColor;
   final Color? langBtnColor;
   final Color? langBtnHighlightColor;
+  final Color? authAppbarTextColor;
 
   CustomThemeExtension({
     this.circleImageColor,
@@ -36,6 +39,7 @@ class CustomThemeExtension extends ThemeExtension<CustomThemeExtension> {
     this.blueColor,
     this.langBtnColor,
     this.langBtnHighlightColor,
+    this.authAppbarTextColor,
   });
 
   @override
@@ -45,12 +49,14 @@ class CustomThemeExtension extends ThemeExtension<CustomThemeExtension> {
     Color? blueColor,
     Color? langBtnColor,
     Color? langBtnHighlightColor,
+    Color? authAppbarTextColor,
   }) {
     return CustomThemeExtension(
       circleImageColor: circleImageColor ?? this.circleImageColor,
       greyColor: greyColor ?? this.greyColor,
       blueColor: blueColor ?? this.blueColor,
       langBtnColor: langBtnColor ?? this.langBtnColor,
+      authAppbarTextColor: authAppbarTextColor ?? this.authAppbarTextColor,
       langBtnHighlightColor:
           langBtnHighlightColor ?? this.langBtnHighlightColor,
     );
@@ -82,6 +88,11 @@ class CustomThemeExtension extends ThemeExtension<CustomThemeExtension> {
       langBtnColor: Color.lerp(
         langBtnColor,
         other.langBtnColor,
+        t,
+      ),
+      authAppbarTextColor: Color.lerp(
+        authAppbarTextColor,
+        other.authAppbarTextColor,
         t,
       ),
       langBtnHighlightColor: Color.lerp(

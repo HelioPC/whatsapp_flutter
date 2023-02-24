@@ -16,18 +16,15 @@ class WelcomePage extends StatelessWidget {
         ),
         body: Column(
           children: [
-            Align(
-              alignment: Alignment.bottomCenter,
-              child: Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 50,
-                    vertical: 10,
-                  ),
-                  child: Image.asset(
-                    'assets/images/circle.png',
-                    color: context.theme.circleImageColor,
-                  ),
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 50,
+                  vertical: 10,
+                ),
+                child: Image.asset(
+                  'assets/images/circle.png',
+                  color: context.theme.circleImageColor,
                 ),
               ),
             ),
