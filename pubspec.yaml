@@ -17,6 +17,11 @@ dependencies:
   cupertino_icons: ^1.0.2
   flutter_native_splash: ^2.2.18
   country_picker: ^2.0.19
+  firebase_core: ^2.8.0
+  firebase_auth: ^4.3.0
+  cloud_firestore: ^4.4.5
+  firebase_storage: ^11.0.16
+  flutter_riverpod: ^2.3.2
 
 flutter_native_splash:
   color: '#FFFFFF'
