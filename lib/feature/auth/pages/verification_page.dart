@@ -6,10 +6,10 @@ import 'package:whatsapp_flutter/feature/auth/widgets/custom_text_field.dart';
 class VerificationPage extends StatefulWidget {
   const VerificationPage({
     super.key,
-    required this.verificationId,
+    required this.smsCodeId,
     required this.phoneNumber,
   });
-  final String verificationId;
+  final String smsCodeId;
   final String phoneNumber;
 
   @override
@@ -64,7 +64,7 @@ class _VerificationPageState extends State<VerificationPage> {
                   children: [
                     const TextSpan(
                       text:
-                          "You've tried to register +251935838471. before requesting an SMS or Call with your code.",
+                          "You've tried to register +244933470417. before requesting an SMS or Call with your code.",
                     ),
                     TextSpan(
                       text: "Wrong number?",
