@@ -29,6 +29,13 @@
             {
               "client_id": "917149098997-17ul5f3bh2m4ito47fcl7ituuvelall1.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "917149098997-a89un6pcfe83aqbieghe4uljdrm5hd0d.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.whatsappFlutter"
+              }
             }
           ]
         }
