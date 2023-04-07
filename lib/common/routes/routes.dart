@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:whatsapp_flutter/feature/auth/pages/login_page.dart';
 import 'package:whatsapp_flutter/feature/auth/pages/user_info_page.dart';
 import 'package:whatsapp_flutter/feature/auth/pages/verification_page.dart';
+import 'package:whatsapp_flutter/feature/home/pages/home_page.dart';
 import 'package:whatsapp_flutter/feature/welcome/pages/welcome_page.dart';
 
 class Routes {
@@ -9,6 +10,7 @@ class Routes {
   static const String login = 'login';
   static const String verification = 'verification';
   static const String userInfo = 'user-info';
+  static const String home = 'home';
 
   static Route<dynamic> onGenerateRoute(RouteSettings settings) {
     switch (settings.name) {
@@ -26,6 +28,8 @@ class Routes {
         );
       case userInfo:
         return MaterialPageRoute(builder: (context) => const UserInfoPage());
+      case home:
+        return MaterialPageRoute(builder: (context) => const HomePage());
       default:
         return MaterialPageRoute(
           builder: (context) => const Scaffold(
