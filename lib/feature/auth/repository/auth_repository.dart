@@ -39,8 +39,8 @@ class AuthRepository {
     try {
       showLoadingDialog(context: context, message: 'Saving user info ...');
       String uid = auth.currentUser!.uid;
-      String profileImageUrl = '';
-      if (profileImage != null) {
+      String profileImageUrl = profileImage is String ? profileImage : '';
+      if (profileImage != null && profileImage is! String) {
         profileImageUrl = await ref
             .read(firebaseStorageRepositoryProvider)
             .storeFileToFirebase('profileImage/$uid', profileImage);
@@ -78,9 +78,13 @@ class AuthRepository {
         smsCode: smsCode,
       );
       await auth.signInWithCredential(credential);
+      UserModel? user = await getCurrentUserInfo();
       if (!mounted) return;
-      Navigator.of(context)
-          .pushNamedAndRemoveUntil(Routes.userInfo, (route) => false);
+      Navigator.of(context).pushNamedAndRemoveUntil(
+        Routes.userInfo,
+        (route) => false,
+        arguments: user?.profileImageUrl,
+      );
     } on FirebaseAuthException catch (e) {
       Navigator.pop(context);
       showAlertDialog(context: context, message: e.toString());
