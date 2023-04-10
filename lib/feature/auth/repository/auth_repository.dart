@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:whatsapp_flutter/common/helpers/show_alert_dialog.dart';
+import 'package:whatsapp_flutter/common/helpers/show_loading_dialog.dart';
 import 'package:whatsapp_flutter/common/models/user_model.dart';
 import 'package:whatsapp_flutter/common/repository/firebase_storage_repository.dart';
 import 'package:whatsapp_flutter/common/routes/routes.dart';
@@ -36,6 +37,7 @@ class AuthRepository {
     required bool mounted,
   }) async {
     try {
+      showLoadingDialog(context: context, message: 'Saving user info ...');
       String uid = auth.currentUser!.uid;
       String profileImageUrl = '';
       if (profileImage != null) {
@@ -58,6 +60,7 @@ class AuthRepository {
       if (!mounted) return;
       Navigator.pushNamedAndRemoveUntil(context, Routes.home, (route) => false);
     } catch (e) {
+      Navigator.pop(context);
       showAlertDialog(context: context, message: e.toString());
     }
   }
@@ -69,6 +72,7 @@ class AuthRepository {
     required bool mounted,
   }) async {
     try {
+      showLoadingDialog(context: context, message: 'Verifying code ...');
       final credential = PhoneAuthProvider.credential(
         verificationId: smsCodeId,
         smsCode: smsCode,
@@ -78,6 +82,7 @@ class AuthRepository {
       Navigator.of(context)
           .pushNamedAndRemoveUntil(Routes.userInfo, (route) => false);
     } on FirebaseAuthException catch (e) {
+      Navigator.pop(context);
       showAlertDialog(context: context, message: e.toString());
     }
   }
@@ -87,6 +92,10 @@ class AuthRepository {
     required String phoneNumber,
   }) async {
     try {
+      showLoadingDialog(
+        context: context,
+        message: 'Sending a verification code to $phoneNumber',
+      );
       await auth.verifyPhoneNumber(
         phoneNumber: phoneNumber,
         verificationCompleted: (PhoneAuthCredential credential) async {
@@ -107,6 +116,9 @@ class AuthRepository {
         },
         codeAutoRetrievalTimeout: (String smsCodeId) {},
       );
-    } catch (e) {}
+    } on FirebaseAuth catch (e) {
+      Navigator.pop(context);
+      showAlertDialog(context: context, message: e.toString());
+    }
   }
 }
