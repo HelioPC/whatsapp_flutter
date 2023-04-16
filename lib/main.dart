@@ -4,10 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:whatsapp_flutter/common/routes/routes.dart';
 import 'package:whatsapp_flutter/common/themes/dark_theme.dart';
 import 'package:whatsapp_flutter/common/themes/light_theme.dart';
-import 'package:whatsapp_flutter/common/utils/my_colors.dart';
-import 'package:whatsapp_flutter/feature/auth/controller/auth_controller.dart';
 import 'package:whatsapp_flutter/feature/home/pages/home_page.dart';
-import 'package:whatsapp_flutter/feature/welcome/pages/welcome_page.dart';
 import 'package:whatsapp_flutter/firebase_options.dart';
 
 void main() async {
@@ -33,26 +30,7 @@ class MyApp extends ConsumerWidget {
         theme: lightTheme(),
         darkTheme: darkTheme(),
         themeMode: ThemeMode.system,
-        home: ref.watch(userInfoAuthProvider).when(
-          data: (user) {
-            if (user == null) return const WelcomePage();
-            return const HomePage();
-          },
-          error: (error, trace) {
-            return const Scaffold(
-              body: Center(
-                child: Text('Something went wrong'),
-              ),
-            );
-          },
-          loading: () {
-            return const Scaffold(
-              body: Center(
-                child: CircularProgressIndicator(color: MyColors.greenDark),
-              ),
-            );
-          },
-        ),
+        home: const HomePage(),
         onGenerateRoute: Routes.onGenerateRoute,
       ),
     );

@@ -38,7 +38,7 @@ class CustomIconButton extends StatelessWidget {
         ),
         icon: Icon(
           iconData,
-          color: color ?? context.theme.greyColor,
+          color: color ?? Theme.of(context).appBarTheme.iconTheme!.color,
         ),
       ),
     );
