@@ -13,13 +13,27 @@ ThemeData darkTheme() {
     scaffoldBackgroundColor: MyColors.backgroundDark,
     extensions: [CustomThemeExtension.darkMode],
     appBarTheme: const AppBarTheme(
+      backgroundColor: MyColors.greyBackground,
       titleTextStyle: TextStyle(
         fontSize: 18,
+        fontWeight: FontWeight.w600,
+        color: MyColors.greyDark,
       ),
       systemOverlayStyle: SystemUiOverlayStyle(
         statusBarColor: Colors.transparent,
         statusBarBrightness: Brightness.light,
       ),
+      iconTheme: IconThemeData(color: MyColors.greyDark),
+    ),
+    tabBarTheme: const TabBarTheme(
+      indicator: UnderlineTabIndicator(
+        borderSide: BorderSide(
+          color: MyColors.greenDark,
+          width: 2,
+        ),
+      ),
+      unselectedLabelColor: MyColors.greyDark,
+      labelColor: MyColors.greenDark,
     ),
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
