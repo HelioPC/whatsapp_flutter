@@ -5,6 +5,7 @@ import 'package:whatsapp_flutter/common/routes/routes.dart';
 import 'package:whatsapp_flutter/common/themes/dark_theme.dart';
 import 'package:whatsapp_flutter/common/themes/light_theme.dart';
 import 'package:whatsapp_flutter/feature/home/pages/home_page.dart';
+import 'package:whatsapp_flutter/feature/welcome/pages/welcome_page.dart';
 import 'package:whatsapp_flutter/firebase_options.dart';
 
 void main() async {
@@ -30,7 +31,7 @@ class MyApp extends ConsumerWidget {
         theme: lightTheme(),
         darkTheme: darkTheme(),
         themeMode: ThemeMode.system,
-        home: const HomePage(),
+        home: const WelcomePage(),
         onGenerateRoute: Routes.onGenerateRoute,
       ),
     );
