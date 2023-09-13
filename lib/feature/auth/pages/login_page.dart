@@ -23,7 +23,6 @@ class _LoginPageState extends ConsumerState<LoginPage> {
 
   sendCodeToPhone() {
     final phoneNumber = phoneNumberController.text;
-    final countryName = countryNameController.text;
     final countryCode = countryCodeController.text;
 
     if (phoneNumber.isEmpty) {

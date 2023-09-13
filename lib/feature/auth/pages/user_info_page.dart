@@ -110,7 +110,6 @@ class _UserInfoPageState extends ConsumerState<UserInfoPage> {
     );
   }
 
-  //TODO: test this function on real devices
   pickImageFromCamera() async {
     Navigator.of(context).pop();
     try {
@@ -120,7 +119,9 @@ class _UserInfoPageState extends ConsumerState<UserInfoPage> {
         imageGallery = null;
       });
     } catch (e) {
-      showAlertDialog(context: context, message: e.toString());
+      if (context.mounted) {
+        showAlertDialog(context: context, message: e.toString());
+      }
     }
   }
 

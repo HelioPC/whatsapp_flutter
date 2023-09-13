@@ -121,8 +121,10 @@ class AuthRepository {
         codeAutoRetrievalTimeout: (String smsCodeId) {},
       );
     } on FirebaseAuth catch (e) {
-      Navigator.pop(context);
-      showAlertDialog(context: context, message: e.toString());
+      if (context.mounted) {
+        Navigator.pop(context);
+        showAlertDialog(context: context, message: e.toString());
+      }
     }
   }
 }
