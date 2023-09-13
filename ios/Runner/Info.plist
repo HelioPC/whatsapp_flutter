@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>NSContactsUsageDescription</key>
-    <string>Reason we need access to the contact list</string>
+    <string>Add your contacts</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Allow this app to access your photos</string>
 	<key>CADisableMinimumFrameDurationOnPhone</key>
@@ -63,6 +63,8 @@
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
+	<false/>
+	<key>FLTEnableImpeller</key>
 	<false/>
 </dict>
 </plist>
