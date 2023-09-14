@@ -6,6 +6,7 @@ import 'package:whatsapp_flutter/common/models/user_model.dart';
 import 'package:whatsapp_flutter/common/utils/my_colors.dart';
 import 'package:whatsapp_flutter/feature/auth/widgets/custom_icon_button.dart';
 import 'package:whatsapp_flutter/feature/contacts/controllers/contacts_controller.dart';
+import 'package:whatsapp_flutter/feature/contacts/widgets/contact_card.dart';
 
 class ContactPage extends ConsumerWidget {
   const ContactPage({super.key});
@@ -65,56 +66,31 @@ class ContactPage extends ConsumerWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       if (i == 0) ...[
-                        Padding(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 20, vertical: 10),
-                          child: Text(
-                            'Contacts on WhatsApp',
-                            style: TextStyle(
-                              fontWeight: FontWeight.w600,
-                              color: context.theme.greyColor,
+                        Column(
+                          children: [
+                            myListTile(leading: Icons.group, text: 'New group'),
+                            myListTile(
+                              leading: Icons.contacts,
+                              text: 'New contact',
+                              trailing: Icons.qr_code,
                             ),
-                          ),
+                            Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 20, vertical: 10),
+                              child: Text(
+                                'Contacts on WhatsApp',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.w600,
+                                  color: context.theme.greyColor,
+                                ),
+                              ),
+                            ),
+                          ],
                         )
                       ],
-                      ListTile(
-                        contentPadding: const EdgeInsets.only(
-                          top: 0,
-                          right: 10,
-                          bottom: 0,
-                          left: 20,
-                        ),
-                        dense: true,
-                        leading: CircleAvatar(
-                          backgroundColor:
-                              context.theme.greyColor?.withOpacity(.3),
-                          backgroundImage: firebaseContacts
-                                  .profileImageUrl.isNotEmpty
-                              ? NetworkImage(firebaseContacts.profileImageUrl)
-                              : null,
-                          radius: 20,
-                          child: firebaseContacts.profileImageUrl.isEmpty
-                              ? const Icon(
-                                  Icons.person,
-                                  size: 30,
-                                  color: Colors.white,
-                                )
-                              : null,
-                        ),
-                        title: Text(
-                          firebaseContacts.username,
-                          style: const TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                        subtitle: Text(
-                          'Hey there! I\'m using WhatsApp',
-                          style: TextStyle(
-                            color: context.theme.greyColor,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
+                      ContactCard(
+                        onTap: () {},
+                        contactSource: firebaseContacts,
                       ),
                     ],
                   )
@@ -133,51 +109,12 @@ class ContactPage extends ConsumerWidget {
                           ),
                         )
                       ],
-                      ListTile(
-                        onTap: () async => shareSmsLink(
+                      ContactCard(
+                        onTap: () => shareSmsLink(
                           phoneContacts.phoneNumber,
                         ),
-                        contentPadding: const EdgeInsets.only(
-                          top: 0,
-                          right: 10,
-                          bottom: 0,
-                          left: 20,
-                        ),
-                        dense: true,
-                        leading: CircleAvatar(
-                          backgroundColor:
-                              context.theme.greyColor?.withOpacity(.3),
-                          radius: 20,
-                          child: const Icon(
-                            Icons.person,
-                            size: 30,
-                            color: Colors.white,
-                          ),
-                        ),
-                        trailing: TextButton(
-                          onPressed: () async => shareSmsLink(
-                            phoneContacts.phoneNumber,
-                          ),
-                          style: TextButton.styleFrom(
-                            foregroundColor: MyColors.greenDark,
-                          ),
-                          child: const Text('INVITE'),
-                        ),
-                        title: Text(
-                          phoneContacts.username,
-                          style: const TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                        subtitle: Text(
-                          'Hey there! I\'m using WhatsApp',
-                          style: TextStyle(
-                            color: context.theme.greyColor,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                      )
+                        contactSource: phoneContacts,
+                      ),
                     ],
                   );
           },
@@ -193,4 +130,33 @@ class ContactPage extends ConsumerWidget {
       }),
     );
   }
+}
+
+ListTile myListTile({
+  required IconData leading,
+  required String text,
+  IconData? trailing,
+}) {
+  return ListTile(
+    contentPadding: const EdgeInsets.only(top: 10, left: 20, right: 10),
+    leading: CircleAvatar(
+      radius: 20,
+      backgroundColor: MyColors.greenDark,
+      child: Icon(
+        leading,
+        color: Colors.white,
+      ),
+    ),
+    title: Text(
+      text,
+      style: const TextStyle(
+        fontSize: 16,
+        fontWeight: FontWeight.w500,
+      ),
+    ),
+    trailing: Icon(
+      trailing,
+      color: MyColors.greyDark,
+    ),
+  );
 }
