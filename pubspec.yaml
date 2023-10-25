@@ -22,10 +22,11 @@ dependencies:
   cloud_firestore: ^4.4.5
   firebase_storage: ^11.0.16
   flutter_riverpod: ^2.3.2
-  image_picker: ^0.8.7+1
+  image_picker: ^1.0.4
   photo_manager: ^2.6.0
   flutter_contacts: ^1.1.6
   url_launcher: ^6.1.14
+  firebase_database: ^10.3.1
 
 flutter_native_splash:
   color: '#FFFFFF'
@@ -44,7 +45,7 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
 
-  flutter_lints: ^2.0.0
+  flutter_lints: ^3.0.0
 
 flutter:
 

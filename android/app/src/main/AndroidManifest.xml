@@ -2,6 +2,8 @@
     package="com.example.whatsapp_flutter">
     <uses-permission android:name="android.permission.READ_CONTACTS"/>
     <uses-permission android:name="android.permission.WRITE_CONTACTS"/>
+    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES"/>
+    <uses-permission android:name="android.permission.CAMERA"/>
    <application
         android:label="Whatsapp Clone"
         android:name="${applicationName}"

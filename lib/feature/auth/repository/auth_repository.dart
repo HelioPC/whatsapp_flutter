@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:whatsapp_flutter/common/helpers/show_alert_dialog.dart';
@@ -10,14 +11,53 @@ import 'package:whatsapp_flutter/common/routes/routes.dart';
 
 final authRepositoryProvider = Provider(
   (ref) => AuthRepository(
-      auth: FirebaseAuth.instance, firestore: FirebaseFirestore.instance),
+    auth: FirebaseAuth.instance,
+    firestore: FirebaseFirestore.instance,
+    realtime: FirebaseDatabase.instance,
+  ),
 );
 
 class AuthRepository {
   final FirebaseAuth auth;
   final FirebaseFirestore firestore;
+  final FirebaseDatabase realtime;
 
-  AuthRepository({required this.auth, required this.firestore});
+  AuthRepository({
+    required this.auth,
+    required this.firestore,
+    required this.realtime,
+  });
+
+  void updateUserPresence() async {
+    Map<String, dynamic> online = {
+      'active': true,
+      'lastSeen': DateTime.now().millisecondsSinceEpoch,
+    };
+
+    Map<String, dynamic> offline = {
+      'active': false,
+      'lastSeen': DateTime.now().millisecondsSinceEpoch,
+    };
+
+    final connectedRef = realtime.ref('.info/connected');
+
+    // Every time we got or lost connection and also when we close or open
+    // our app this event will be triggered
+
+    connectedRef.onValue.listen((event) async {
+      final isConnected = event.snapshot.value as bool? ?? false;
+
+      if (isConnected) {
+        await realtime.ref().child(auth.currentUser!.uid).update(online);
+      } else {
+        realtime
+            .ref()
+            .child(auth.currentUser!.uid)
+            .onDisconnect()
+            .update(offline);
+      }
+    });
+  }
 
   Future<UserModel?> getCurrentUserInfo() async {
     UserModel? user;
@@ -51,6 +91,7 @@ class AuthRepository {
         uid: uid,
         profileImageUrl: profileImageUrl,
         active: true,
+        lastSeen: DateTime.now().millisecondsSinceEpoch,
         phoneNumber: auth.currentUser!.phoneNumber!,
         groupId: [],
       );
