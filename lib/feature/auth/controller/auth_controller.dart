@@ -22,6 +22,10 @@ class AuthController {
 
   AuthController({required this.authRepository, required this.ref});
 
+  Stream<UserModel> getUserPresenceStatus({required String uid}) {
+    return authRepository.getUserPresenceStatus(uid: uid);
+  }
+
   void updateUserPresence() {
     return authRepository.updateUserPresence();
   }
