@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:whatsapp_flutter/common/extension/custom_theme_extension.dart';
 import 'package:whatsapp_flutter/common/models/user_model.dart';
@@ -27,7 +28,7 @@ class ContactCard extends StatelessWidget {
       leading: CircleAvatar(
         backgroundColor: context.theme.greyColor?.withOpacity(.3),
         backgroundImage: contactSource.profileImageUrl.isNotEmpty
-            ? NetworkImage(contactSource.profileImageUrl)
+            ? CachedNetworkImageProvider(contactSource.profileImageUrl)
             : null,
         radius: 20,
         child: contactSource.profileImageUrl.isEmpty
