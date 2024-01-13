@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
@@ -32,6 +33,7 @@ class ChatHomePage extends ConsumerWidget {
 
               return ListTile(
                 title: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(lastMessage.username),
                     Text(
@@ -50,6 +52,12 @@ class ChatHomePage extends ConsumerWidget {
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(color: context.theme.greyColor),
+                  ),
+                ),
+                leading: CircleAvatar(
+                  radius: 24,
+                  backgroundImage: CachedNetworkImageProvider(
+                    lastMessage.profileImageUrl,
                   ),
                 ),
               );

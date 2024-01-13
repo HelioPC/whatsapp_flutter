@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:whatsapp_flutter/common/models/last_message_model.dart';
 import 'package:whatsapp_flutter/feature/auth/controller/auth_controller.dart';
 import 'package:whatsapp_flutter/feature/chat/repository/chat_repository.dart';
 
@@ -18,6 +19,10 @@ class ChatController {
     required this.chatRepository,
     required this.ref,
   });
+
+  Stream<List<LastMessageModel>> getAllLastMessages() {
+    return chatRepository.getAllLastMessages();
+  }
 
   void sendTextMessage({
     required BuildContext context,
