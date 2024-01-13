@@ -85,7 +85,7 @@ class _UserInfoPageState extends ConsumerState<UserInfoPage> {
                 ),
                 const SizedBox(width: 15),
                 imagePickerIcon(
-                  onTap: () async {
+                  onTap: (context) async {
                     Navigator.pop(context);
                     final image = await Navigator.of(context).push(
                       MaterialPageRoute(
@@ -110,8 +110,7 @@ class _UserInfoPageState extends ConsumerState<UserInfoPage> {
     );
   }
 
-  pickImageFromCamera() async {
-    Navigator.of(context).pop();
+  pickImageFromCamera(BuildContext context) async {
     try {
       final image = await ImagePicker().pickImage(source: ImageSource.camera);
       setState(() {
@@ -123,17 +122,21 @@ class _UserInfoPageState extends ConsumerState<UserInfoPage> {
         showAlertDialog(context: context, message: e.toString());
       }
     }
+
+    if (context.mounted) {
+      Navigator.of(context).pop();
+    }
   }
 
   imagePickerIcon({
-    required VoidCallback onTap,
+    required Function(BuildContext) onTap,
     required IconData icon,
     required String text,
   }) {
     return Column(
       children: [
         CustomIconButton(
-          onTap: onTap,
+          onTap: () => onTap(context),
           iconData: icon,
           color: MyColors.greenDark,
           minWidth: 50,

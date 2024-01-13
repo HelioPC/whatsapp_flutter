@@ -106,7 +106,7 @@ class AuthRepository {
 
       await firestore.collection('users').doc(uid).set(user.toMap());
 
-      if (!mounted) return;
+      if (!context.mounted) return;
       Navigator.pushNamedAndRemoveUntil(context, Routes.home, (route) => false);
     } catch (e) {
       Navigator.pop(context);
@@ -128,7 +128,7 @@ class AuthRepository {
       );
       await auth.signInWithCredential(credential);
       UserModel? user = await getCurrentUserInfo();
-      if (!mounted) return;
+      if (!context.mounted) return;
       Navigator.of(context).pushNamedAndRemoveUntil(
         Routes.userInfo,
         (route) => false,
