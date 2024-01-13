@@ -1,11 +1,13 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:whatsapp_flutter/common/extension/custom_theme_extension.dart';
 import 'package:whatsapp_flutter/common/helpers/last_seen_message.dart';
 import 'package:whatsapp_flutter/common/models/user_model.dart';
 import 'package:whatsapp_flutter/common/routes/routes.dart';
 import 'package:whatsapp_flutter/feature/auth/controller/auth_controller.dart';
 import 'package:whatsapp_flutter/feature/auth/widgets/custom_icon_button.dart';
+import 'package:whatsapp_flutter/feature/chat/widgets/chat_text_field.dart';
 
 class ChatPage extends ConsumerWidget {
   final UserModel userModel;
@@ -94,6 +96,27 @@ class ChatPage extends ConsumerWidget {
           CustomIconButton(onTap: () {}, iconData: Icons.video_call),
           CustomIconButton(onTap: () {}, iconData: Icons.call),
           CustomIconButton(onTap: () {}, iconData: Icons.more_vert),
+        ],
+      ),
+      body: Stack(
+        children: [
+          Image(
+            height: double.maxFinite,
+            width: double.maxFinite,
+            fit: BoxFit.cover,
+            color: context.theme.photoIconBgColor,
+            image: const AssetImage(
+              'assets/images/doodle_bg.png',
+            ),
+          ),
+          Column(
+            children: [
+              Expanded(
+                child: Container(),
+              ),
+              ChatTextField(receiverId: userModel.uid),
+            ],
+          )
         ],
       ),
     );

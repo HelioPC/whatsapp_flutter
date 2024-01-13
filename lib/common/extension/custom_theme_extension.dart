@@ -18,19 +18,20 @@ class CustomThemeExtension extends ThemeExtension<CustomThemeExtension> {
     photoIconBgColor: const Color(0xFFF0F2F3),
     photoIconColor: const Color(0xFF9DAAB3),
     profilePageBg: const Color(0xFFF7F8FA),
+    chatTextFieldBg: Colors.white,
   );
 
   static CustomThemeExtension darkMode = CustomThemeExtension(
-    circleImageColor: MyColors.greenDark,
-    greyColor: MyColors.greyLight,
-    blueColor: MyColors.blueLight,
-    langBtnColor: const Color(0xFF182229),
-    langBtnHighlightColor: const Color(0xFF09141A),
-    authAppbarTextColor: const Color(0xFFE9EDEF),
-    photoIconBgColor: const Color(0xFF283339),
-    photoIconColor: const Color(0xFF61717B),
-    profilePageBg: const Color(0xFF0B141A),
-  );
+      circleImageColor: MyColors.greenDark,
+      greyColor: MyColors.greyLight,
+      blueColor: MyColors.blueLight,
+      langBtnColor: const Color(0xFF182229),
+      langBtnHighlightColor: const Color(0xFF09141A),
+      authAppbarTextColor: const Color(0xFFE9EDEF),
+      photoIconBgColor: const Color(0xFF283339),
+      photoIconColor: const Color(0xFF61717B),
+      profilePageBg: const Color(0xFF0B141A),
+      chatTextFieldBg: MyColors.greyBackground);
 
   final Color? circleImageColor;
   final Color? greyColor;
@@ -41,6 +42,7 @@ class CustomThemeExtension extends ThemeExtension<CustomThemeExtension> {
   final Color? photoIconBgColor;
   final Color? photoIconColor;
   final Color? profilePageBg;
+  final Color? chatTextFieldBg;
 
   CustomThemeExtension({
     this.circleImageColor,
@@ -52,6 +54,7 @@ class CustomThemeExtension extends ThemeExtension<CustomThemeExtension> {
     this.photoIconBgColor,
     this.photoIconColor,
     this.profilePageBg,
+    this.chatTextFieldBg,
   });
 
   @override
@@ -65,6 +68,7 @@ class CustomThemeExtension extends ThemeExtension<CustomThemeExtension> {
     Color? photoIconBgColor,
     Color? photoIconColor,
     Color? profilePageBg,
+    Color? chatTextFieldBg,
   }) {
     return CustomThemeExtension(
       circleImageColor: circleImageColor ?? this.circleImageColor,
@@ -77,6 +81,7 @@ class CustomThemeExtension extends ThemeExtension<CustomThemeExtension> {
       langBtnHighlightColor:
           langBtnHighlightColor ?? this.langBtnHighlightColor,
       profilePageBg: profilePageBg ?? this.profilePageBg,
+      chatTextFieldBg: chatTextFieldBg ?? this.chatTextFieldBg,
     );
   }
 
@@ -131,6 +136,11 @@ class CustomThemeExtension extends ThemeExtension<CustomThemeExtension> {
       profilePageBg: Color.lerp(
         profilePageBg,
         other.profilePageBg,
+        t,
+      ),
+      chatTextFieldBg: Color.lerp(
+        chatTextFieldBg,
+        other.chatTextFieldBg,
         t,
       ),
     );
