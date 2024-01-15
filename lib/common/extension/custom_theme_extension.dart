@@ -19,19 +19,24 @@ class CustomThemeExtension extends ThemeExtension<CustomThemeExtension> {
     photoIconColor: const Color(0xFF9DAAB3),
     profilePageBg: const Color(0xFFF7F8FA),
     chatTextFieldBg: Colors.white,
+    chatPageBgColor: const Color(0xFFEFE7DE),
+    chatPageDoodleColor: Colors.white70,
   );
 
   static CustomThemeExtension darkMode = CustomThemeExtension(
-      circleImageColor: MyColors.greenDark,
-      greyColor: MyColors.greyLight,
-      blueColor: MyColors.blueLight,
-      langBtnColor: const Color(0xFF182229),
-      langBtnHighlightColor: const Color(0xFF09141A),
-      authAppbarTextColor: const Color(0xFFE9EDEF),
-      photoIconBgColor: const Color(0xFF283339),
-      photoIconColor: const Color(0xFF61717B),
-      profilePageBg: const Color(0xFF0B141A),
-      chatTextFieldBg: MyColors.greyBackground);
+    circleImageColor: MyColors.greenDark,
+    greyColor: MyColors.greyLight,
+    blueColor: MyColors.blueLight,
+    langBtnColor: const Color(0xFF182229),
+    langBtnHighlightColor: const Color(0xFF09141A),
+    authAppbarTextColor: const Color(0xFFE9EDEF),
+    photoIconBgColor: const Color(0xFF283339),
+    photoIconColor: const Color(0xFF61717B),
+    profilePageBg: const Color(0xFF0B141A),
+    chatTextFieldBg: MyColors.greyBackground,
+    chatPageBgColor: const Color(0xFF081419),
+    chatPageDoodleColor: const Color(0xFF172428),
+  );
 
   final Color? circleImageColor;
   final Color? greyColor;
@@ -43,6 +48,8 @@ class CustomThemeExtension extends ThemeExtension<CustomThemeExtension> {
   final Color? photoIconColor;
   final Color? profilePageBg;
   final Color? chatTextFieldBg;
+  final Color? chatPageBgColor;
+  final Color? chatPageDoodleColor;
 
   CustomThemeExtension({
     this.circleImageColor,
@@ -55,6 +62,8 @@ class CustomThemeExtension extends ThemeExtension<CustomThemeExtension> {
     this.photoIconColor,
     this.profilePageBg,
     this.chatTextFieldBg,
+    this.chatPageBgColor,
+    this.chatPageDoodleColor,
   });
 
   @override
@@ -69,6 +78,8 @@ class CustomThemeExtension extends ThemeExtension<CustomThemeExtension> {
     Color? photoIconColor,
     Color? profilePageBg,
     Color? chatTextFieldBg,
+    Color? chatPageBgColor,
+    Color? chatPageDoodleColor,
   }) {
     return CustomThemeExtension(
       circleImageColor: circleImageColor ?? this.circleImageColor,
@@ -82,6 +93,8 @@ class CustomThemeExtension extends ThemeExtension<CustomThemeExtension> {
           langBtnHighlightColor ?? this.langBtnHighlightColor,
       profilePageBg: profilePageBg ?? this.profilePageBg,
       chatTextFieldBg: chatTextFieldBg ?? this.chatTextFieldBg,
+      chatPageBgColor: chatPageBgColor ?? this.chatPageBgColor,
+      chatPageDoodleColor: chatPageDoodleColor ?? this.chatPageDoodleColor,
     );
   }
 
@@ -141,6 +154,16 @@ class CustomThemeExtension extends ThemeExtension<CustomThemeExtension> {
       chatTextFieldBg: Color.lerp(
         chatTextFieldBg,
         other.chatTextFieldBg,
+        t,
+      ),
+      chatPageBgColor: Color.lerp(
+        chatPageBgColor,
+        other.chatPageBgColor,
+        t,
+      ),
+      chatPageDoodleColor: Color.lerp(
+        chatPageDoodleColor,
+        other.chatPageDoodleColor,
         t,
       ),
     );
