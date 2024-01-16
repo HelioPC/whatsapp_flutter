@@ -25,6 +25,26 @@ class ChatRepository {
     required this.auth,
   });
 
+  Stream<List<MessageModel>> getAllOneToOneMessage(String receiverId) {
+    return firestore
+        .collection('users')
+        .doc(auth.currentUser!.uid)
+        .collection('chats')
+        .doc(receiverId)
+        .collection('messages')
+        .orderBy('timeSent')
+        .snapshots()
+        .map(
+      (event) {
+        final messages = <MessageModel>[];
+        for (final doc in event.docs) {
+          messages.add(MessageModel.fromMap(doc.data()));
+        }
+        return messages;
+      },
+    );
+  }
+
   Stream<List<LastMessageModel>> getAllLastMessages() {
     return firestore
         .collection('users')

@@ -75,6 +75,7 @@ class _ChatTextFieldState extends ConsumerState<ChatTextField> {
                 child: CustomIconButton(
                   onTap: () {},
                   iconData: Icons.emoji_emotions_outlined,
+                  color: Theme.of(context).listTileTheme.iconColor,
                 ),
               ),
               suffixIcon: Row(
@@ -85,11 +86,13 @@ class _ChatTextFieldState extends ConsumerState<ChatTextField> {
                     child: CustomIconButton(
                       onTap: () {},
                       iconData: Icons.attach_file,
+                      color: Theme.of(context).listTileTheme.iconColor,
                     ),
                   ),
                   CustomIconButton(
                     onTap: () {},
                     iconData: Icons.camera_alt_outlined,
+                    color: Theme.of(context).listTileTheme.iconColor,
                   )
                 ],
               ),
