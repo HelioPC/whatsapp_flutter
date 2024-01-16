@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:whatsapp_flutter/common/extension/custom_theme_extension.dart';
 import 'package:whatsapp_flutter/common/utils/my_colors.dart';
@@ -6,9 +7,14 @@ import 'package:whatsapp_flutter/feature/auth/widgets/custom_icon_button.dart';
 import 'package:whatsapp_flutter/feature/chat/controllers/chat_controller.dart';
 
 class ChatTextField extends ConsumerStatefulWidget {
-  const ChatTextField({super.key, required this.receiverId});
+  const ChatTextField({
+    super.key,
+    required this.receiverId,
+    required this.scrollController,
+  });
 
   final String receiverId;
+  final ScrollController scrollController;
 
   @override
   ConsumerState<ChatTextField> createState() => _ChatTextFieldState();
@@ -27,6 +33,15 @@ class _ChatTextFieldState extends ConsumerState<ChatTextField> {
           );
       messageController.clear();
     }
+
+    await Future.delayed(const Duration(milliseconds: 100));
+    SchedulerBinding.instance.addPostFrameCallback((_) {
+      widget.scrollController.animateTo(
+        widget.scrollController.position.maxScrollExtent,
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.easeOut,
+      );
+    });
   }
 
   @override

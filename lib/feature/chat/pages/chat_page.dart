@@ -16,7 +16,9 @@ import 'package:whatsapp_flutter/feature/chat/widgets/chat_text_field.dart';
 class ChatPage extends ConsumerWidget {
   final UserModel userModel;
 
-  const ChatPage({super.key, required this.userModel});
+  ChatPage({super.key, required this.userModel});
+
+  final ScrollController _scrollController = ScrollController();
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -132,6 +134,8 @@ class ChatPage extends ConsumerWidget {
 
                     return ListView.builder(
                       itemCount: messages!.length,
+                      shrinkWrap: true,
+                      controller: _scrollController,
                       itemBuilder: (_, index) {
                         final message = messages[index];
                         final isSender = message.senderId ==
@@ -251,7 +255,10 @@ class ChatPage extends ConsumerWidget {
                   },
                 ),
               ),
-              ChatTextField(receiverId: userModel.uid),
+              ChatTextField(
+                receiverId: userModel.uid,
+                scrollController: _scrollController,
+              ),
             ],
           )
         ],
