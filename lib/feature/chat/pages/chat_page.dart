@@ -29,8 +29,8 @@ class ChatPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
+      backgroundColor: context.theme.chatPageBgColor,
       appBar: AppBar(
-        backgroundColor: context.theme.chatPageBgColor,
         leading: InkWell(
           onTap: () {
             Navigator.of(context).pop();
@@ -117,7 +117,7 @@ class ChatPage extends ConsumerWidget {
             height: double.maxFinite,
             width: double.maxFinite,
             fit: BoxFit.cover,
-            color: context.theme.chatPageBgColor,
+            color: context.theme.chatPageDoodleColor,
             image: const AssetImage(
               'assets/images/doodle_bg.png',
             ),
