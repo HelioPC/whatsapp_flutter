@@ -130,28 +130,23 @@ class ChatPage extends ConsumerWidget {
                   .getAllOneToOneMessage(userModel.uid),
               builder: (context, snapshot) {
                 if (snapshot.connectionState != ConnectionState.active) {
-                  final list = <int>[];
-
-                  for (var i = 0; i < 15; i++) {
-                    list.add(Random().nextInt(14));
-                  }
-
                   return ListView.builder(
-                    itemCount: list.length,
+                    itemCount: 15,
                     itemBuilder: (_, index) {
+                      final random = Random().nextInt(14);
                       return Container(
-                        alignment: list[index].isEven
+                        alignment: random.isEven
                             ? Alignment.centerRight
                             : Alignment.centerLeft,
                         margin: EdgeInsets.only(
                           top: 5,
                           bottom: 5,
-                          left: list[index].isEven ? 150 : 15,
-                          right: list[index].isEven ? 15 : 150,
+                          left: random.isEven ? 150 : 15,
+                          right: random.isEven ? 15 : 150,
                         ),
                         child: ClipPath(
                           clipper: UpperNipMessageClipperTwo(
-                            list[index].isEven
+                            random.isEven
                                 ? MessageType.send
                                 : MessageType.receive,
                             nipWidth: 8,
@@ -159,17 +154,17 @@ class ChatPage extends ConsumerWidget {
                             bubbleRadius: 12,
                           ),
                           child: Shimmer.fromColors(
-                            baseColor: list[index].isEven
+                            baseColor: random.isEven
                                 ? context.theme.greyColor!.withOpacity(.3)
                                 : context.theme.greyColor!.withOpacity(.2),
-                            highlightColor: list[index].isEven
+                            highlightColor: random.isEven
                                 ? context.theme.greyColor!.withOpacity(.4)
                                 : context.theme.greyColor!.withOpacity(.3),
                             child: Container(
                               height: 40,
                               width: 170 +
                                   double.parse(
-                                    (list[index] * 2).toString(),
+                                    (random * 2).toString(),
                                   ),
                               color: Colors.red,
                             ),
