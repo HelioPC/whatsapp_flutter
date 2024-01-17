@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:whatsapp_flutter/common/extension/custom_theme_extension.dart';
 import 'package:whatsapp_flutter/common/models/last_message_model.dart';
+import 'package:whatsapp_flutter/common/models/user_model.dart';
 import 'package:whatsapp_flutter/common/routes/routes.dart';
 import 'package:whatsapp_flutter/common/utils/my_colors.dart';
 import 'package:whatsapp_flutter/feature/chat/controllers/chat_controller.dart';
@@ -32,6 +33,21 @@ class ChatHomePage extends ConsumerWidget {
               final lastMessage = snapshot.data![index];
 
               return ListTile(
+                onTap: () {
+                  Navigator.pushNamed(
+                    context,
+                    Routes.chat,
+                    arguments: UserModel(
+                      username: lastMessage.username,
+                      profileImageUrl: lastMessage.profileImageUrl,
+                      uid: lastMessage.contactId,
+                      active: true,
+                      lastSeen: 0,
+                      phoneNumber: '0',
+                      groupId: [],
+                    ),
+                  );
+                },
                 title: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
