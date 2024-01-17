@@ -122,113 +122,110 @@ class ChatPage extends ConsumerWidget {
               'assets/images/doodle_bg.png',
             ),
           ),
-          Column(
-            children: [
-              Expanded(
-                child: StreamBuilder(
-                  stream: ref
-                      .read(chatControllerProvider)
-                      .getAllOneToOneMessage(userModel.uid),
-                  builder: (context, snapshot) {
-                    if (snapshot.connectionState != ConnectionState.active) {
-                      final list = <int>[];
+          Padding(
+            padding: const EdgeInsets.only(bottom: 60),
+            child: StreamBuilder(
+              stream: ref
+                  .read(chatControllerProvider)
+                  .getAllOneToOneMessage(userModel.uid),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState != ConnectionState.active) {
+                  final list = <int>[];
 
-                      for (var i = 0; i < 15; i++) {
-                        list.add(Random().nextInt(14));
-                      }
+                  for (var i = 0; i < 15; i++) {
+                    list.add(Random().nextInt(14));
+                  }
 
-                      return ListView.builder(
-                        itemCount: list.length,
-                        itemBuilder: (_, index) {
-                          return Container(
-                            alignment: list[index].isEven
-                                ? Alignment.centerRight
-                                : Alignment.centerLeft,
-                            margin: EdgeInsets.only(
-                              top: 5,
-                              bottom: 5,
-                              left: list[index].isEven ? 150 : 15,
-                              right: list[index].isEven ? 15 : 150,
+                  return ListView.builder(
+                    itemCount: list.length,
+                    itemBuilder: (_, index) {
+                      return Container(
+                        alignment: list[index].isEven
+                            ? Alignment.centerRight
+                            : Alignment.centerLeft,
+                        margin: EdgeInsets.only(
+                          top: 5,
+                          bottom: 5,
+                          left: list[index].isEven ? 150 : 15,
+                          right: list[index].isEven ? 15 : 150,
+                        ),
+                        child: ClipPath(
+                          clipper: UpperNipMessageClipperTwo(
+                            list[index].isEven
+                                ? MessageType.send
+                                : MessageType.receive,
+                            nipWidth: 8,
+                            nipHeight: 10,
+                            bubbleRadius: 12,
+                          ),
+                          child: Shimmer.fromColors(
+                            baseColor: list[index].isEven
+                                ? context.theme.greyColor!.withOpacity(.3)
+                                : context.theme.greyColor!.withOpacity(.2),
+                            highlightColor: list[index].isEven
+                                ? context.theme.greyColor!.withOpacity(.4)
+                                : context.theme.greyColor!.withOpacity(.3),
+                            child: Container(
+                              height: 40,
+                              width: 170 +
+                                  double.parse(
+                                    (list[index] * 2).toString(),
+                                  ),
+                              color: Colors.red,
                             ),
-                            child: ClipPath(
-                              clipper: UpperNipMessageClipperTwo(
-                                list[index].isEven
-                                    ? MessageType.send
-                                    : MessageType.receive,
-                                nipWidth: 8,
-                                nipHeight: 10,
-                                bubbleRadius: 12,
-                              ),
-                              child: Shimmer.fromColors(
-                                baseColor: list[index].isEven
-                                    ? context.theme.greyColor!.withOpacity(.3)
-                                    : context.theme.greyColor!.withOpacity(.2),
-                                highlightColor: list[index].isEven
-                                    ? context.theme.greyColor!.withOpacity(.4)
-                                    : context.theme.greyColor!.withOpacity(.3),
-                                child: Container(
-                                  height: 40,
-                                  width: 170 +
-                                      double.parse(
-                                        (list[index] * 2).toString(),
-                                      ),
-                                  color: Colors.red,
-                                ),
-                              ),
-                            ),
-                          );
-                        },
+                          ),
+                        ),
                       );
-                    }
+                    },
+                  );
+                }
 
-                    final messages = snapshot.data;
+                final messages = snapshot.data;
 
-                    return PageStorage(
-                      bucket: pageStorageBucket,
-                      child: ListView.builder(
-                        key: const PageStorageKey('chat_page_list'),
-                        itemCount: messages!.length,
-                        shrinkWrap: true,
-                        controller: _scrollController,
-                        itemBuilder: (_, index) {
-                          final message = messages[index];
-                          final isSender = message.senderId ==
-                              FirebaseAuth.instance.currentUser!.uid;
+                return PageStorage(
+                  bucket: pageStorageBucket,
+                  child: ListView.builder(
+                    key: const PageStorageKey('chat_page_list'),
+                    itemCount: messages!.length,
+                    shrinkWrap: true,
+                    controller: _scrollController,
+                    itemBuilder: (_, index) {
+                      final message = messages[index];
+                      final isSender = message.senderId ==
+                          FirebaseAuth.instance.currentUser!.uid;
 
-                          final haveNip = (index == 0) ||
-                              (index == messages.length - 1 &&
-                                  message.senderId !=
-                                      messages[index - 1].senderId) ||
-                              (message.senderId !=
-                                      messages[index - 1].senderId &&
-                                  message.senderId ==
-                                      messages[index + 1].senderId) ||
-                              (message.senderId !=
-                                      messages[index - 1].senderId &&
-                                  message.senderId !=
-                                      messages[index + 1].senderId);
+                      final haveNip = (index == 0) ||
+                          (index == messages.length - 1 &&
+                              message.senderId !=
+                                  messages[index - 1].senderId) ||
+                          (message.senderId != messages[index - 1].senderId &&
+                              message.senderId ==
+                                  messages[index + 1].senderId) ||
+                          (message.senderId != messages[index - 1].senderId &&
+                              message.senderId != messages[index + 1].senderId);
 
-                          return Column(
-                            children: [
-                              if (index == 0) const YellowCard(),
-                              MessageCard(
-                                isSender: isSender,
-                                haveNip: haveNip,
-                                message: message,
-                              ),
-                            ],
-                          );
-                        },
-                      ),
-                    );
-                  },
-                ),
-              ),
-              ChatTextField(
-                receiverId: userModel.uid,
-                scrollController: _scrollController,
-              ),
-            ],
+                      return Column(
+                        children: [
+                          if (index == 0) const YellowCard(),
+                          MessageCard(
+                            isSender: isSender,
+                            haveNip: haveNip,
+                            message: message,
+                          ),
+                        ],
+                      );
+                    },
+                  ),
+                );
+              },
+            ),
+          ),
+          Container(
+            alignment: const Alignment(0, 1),
+            child: ChatTextField(
+              receiverId: userModel.uid,
+              scrollController: _scrollController,
+            ),
           )
         ],
       ),
