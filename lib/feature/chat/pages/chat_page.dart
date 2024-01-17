@@ -1,7 +1,11 @@
+import 'dart:math';
+
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:custom_clippers/custom_clippers.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:shimmer/shimmer.dart';
 import 'package:whatsapp_flutter/common/extension/custom_theme_extension.dart';
 import 'package:whatsapp_flutter/common/helpers/last_seen_message.dart';
 import 'package:whatsapp_flutter/common/models/user_model.dart';
@@ -127,8 +131,53 @@ class ChatPage extends ConsumerWidget {
                       .getAllOneToOneMessage(userModel.uid),
                   builder: (context, snapshot) {
                     if (snapshot.connectionState != ConnectionState.active) {
-                      return const Center(
-                        child: CircularProgressIndicator(),
+                      final list = <int>[];
+
+                      for (var i = 0; i < 15; i++) {
+                        list.add(Random().nextInt(14));
+                      }
+
+                      return ListView.builder(
+                        itemCount: list.length,
+                        itemBuilder: (_, index) {
+                          return Container(
+                            alignment: list[index].isEven
+                                ? Alignment.centerRight
+                                : Alignment.centerLeft,
+                            margin: EdgeInsets.only(
+                              top: 5,
+                              bottom: 5,
+                              left: list[index].isEven ? 150 : 15,
+                              right: list[index].isEven ? 15 : 150,
+                            ),
+                            child: ClipPath(
+                              clipper: UpperNipMessageClipperTwo(
+                                list[index].isEven
+                                    ? MessageType.send
+                                    : MessageType.receive,
+                                nipWidth: 8,
+                                nipHeight: 10,
+                                bubbleRadius: 12,
+                              ),
+                              child: Shimmer.fromColors(
+                                baseColor: list[index].isEven
+                                    ? context.theme.greyColor!.withOpacity(.3)
+                                    : context.theme.greyColor!.withOpacity(.2),
+                                highlightColor: list[index].isEven
+                                    ? context.theme.greyColor!.withOpacity(.4)
+                                    : context.theme.greyColor!.withOpacity(.3),
+                                child: Container(
+                                  height: 40,
+                                  width: 170 +
+                                      double.parse(
+                                        (list[index] * 2).toString(),
+                                      ),
+                                  color: Colors.red,
+                                ),
+                              ),
+                            ),
+                          );
+                        },
                       );
                     }
 
