@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:whatsapp_flutter/common/enum/message_type.dart';
 import 'package:whatsapp_flutter/common/models/last_message_model.dart';
 import 'package:whatsapp_flutter/common/models/message_model.dart';
 import 'package:whatsapp_flutter/feature/auth/controller/auth_controller.dart';
@@ -20,6 +21,24 @@ class ChatController {
     required this.chatRepository,
     required this.ref,
   });
+
+  void sendFileMessage({
+    required var file,
+    required BuildContext context,
+    required String receiverId,
+    required MessageType messageType,
+  }) async {
+    ref.read(userInfoAuthProvider).whenData(
+          (value) => chatRepository.sendFileMessage(
+            file: file,
+            context: context,
+            receiverId: receiverId,
+            senderUserData: value!,
+            ref: ref,
+            messageType: messageType,
+          ),
+        );
+  }
 
   Stream<List<MessageModel>> getAllOneToOneMessage(String receiverId) {
     return chatRepository.getAllOneToOneMessage(receiverId);
