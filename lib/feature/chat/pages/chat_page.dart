@@ -15,6 +15,7 @@ import 'package:whatsapp_flutter/feature/auth/widgets/custom_icon_button.dart';
 import 'package:whatsapp_flutter/feature/chat/controllers/chat_controller.dart';
 import 'package:whatsapp_flutter/feature/chat/widgets/chat_text_field.dart';
 import 'package:whatsapp_flutter/feature/chat/widgets/message_card.dart';
+import 'package:whatsapp_flutter/feature/chat/widgets/date_card.dart';
 import 'package:whatsapp_flutter/feature/chat/widgets/yellow_card.dart';
 
 final pageStorageBucket = PageStorageBucket();
@@ -199,9 +200,19 @@ class ChatPage extends ConsumerWidget {
                           (message.senderId != messages[index - 1].senderId &&
                               message.senderId != messages[index + 1].senderId);
 
+                      final isShowDateCard = (index == 0) ||
+                          ((index == messages.length - 1) &&
+                              (message.timeSent.day >
+                                  messages[index - 1].timeSent.day)) ||
+                          (message.timeSent.day >
+                                  messages[index - 1].timeSent.day &&
+                              message.timeSent.day <=
+                                  messages[index + 1].timeSent.day);
+
                       return Column(
                         children: [
                           if (index == 0) const YellowCard(),
+                          if (isShowDateCard) DateCard(message: message),
                           MessageCard(
                             isSender: isSender,
                             haveNip: haveNip,
